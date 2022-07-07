@@ -1,0 +1,33 @@
+-- This module was created by LuaScape and ported by Compwnter
+
+---------------------------------------------------------------------------------------
+
+local webhookService = {}
+
+ local https = game:GetService("HttpService")
+
+function webhookService:createMessage(url, message)
+	local data = {
+		["content"] = message
+	}
+	local finalData = https:JSONEncode(data)
+	https:PostAsync(url, finalData)
+end
+
+function webhookService:createEmbed(url, title, message, image)
+	local data = {
+		['content'] = "",
+		['embeds'] = {{
+			["image"] = {["url"] = image},
+			['title'] = "**"..title.."**",
+			['description'] = message,
+			['type'] = "rich",
+			["color"] = tonumber(0xffffff)
+		}}
+	}
+	local finalData = https:JSONEncode(data)
+	https:PostAsync(url, finalData)
+end
+
+
+return webhookService
